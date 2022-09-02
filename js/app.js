@@ -37,8 +37,10 @@ const displayPhone =(phones,dataLimit)=>{
     <div class="card-body">
       <h5 class="card-title">Brand:${phone.brand}</h5>
       <p class="card-text">Phone Name ${phone.phone_name}</p>
-      <button onclick="loadonDtails('${phone.slug}')" class="btn btn-primary">show Dtails</button>
+      <button onclick="loadonDtails('${phone.slug}')" class="btn btn-primary" 
+      data-bs-toggle="modal" data-bs-target="#exampleModal">show Dtails</button>
     </div>
+
   </div>          
     
     `
@@ -90,6 +92,26 @@ const loadonDtails = async(id)=>{
     const url=` https://openapi.programming-hero.com/api/phone/${id}`
     const res=await fetch(url)
     const data=await res.json()
-    console.log(data.data);
+    
+    displayPhoneDtails(data.data);
+   
+}
+const displayPhoneDtails =(phone)=>{
+    const modalBody=document.getElementById('modal-body');
+    modalBody.innerHTML=`
+    <div class="card p-4">
+    <img src="${phone.image}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">Brand:${phone.brand}</h5>
+      <p class="card-text">Phone Name ${phone.phone_name}</p>
+      <p class="card-text">Relase Dtae ${phone.releaseDate?phone.releaseDate:'N/A'}</p>
+      
+    </div>
+
+  </div>          
+    
+    
+    `
+
 }
 loadPhone('phone');
